@@ -63,11 +63,11 @@ def load_sdriq(input_filename: str):
 
 
 def I_signal(data: np.array):
-    return data[:, 0]
+    return data[0::2]
 
 
 def Q_signal(data: np.array):
-    return data[:, 1]
+    return data[1::2]
 
 
 def save_complex(data: np.array, output_filename: str):
