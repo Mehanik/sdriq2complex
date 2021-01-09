@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+# coding: utf-8
+
+import argparse
+from sdriq2complex import save_complex, load_sdriq
+
+
+def convert(input_filename: str, output_filename: str):
+
+    data, meta = load_sdriq(input_filename)
+    save_complex(data, output_filename)
+
+    return meta
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(prog="sdriq2complex")
+    parser.add_argument("input", help="sdrangel's *.sdriq file")
+    parser.add_argument("output", help="float32 *.complex file")
+    args = parser.parse_args()
+
+    meta = convert(args.input, args.output)
+    for k, v in meta.items():
+        print(f"{k}: {v}")

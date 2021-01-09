@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 # coding: utf-8
 
-import argparse
 import struct
 import numpy as np
 
 
-def load_data(input_filename: str):
-    """Reading sdrangel's iq file format
+def load_sdriq(input_filename: str):
+    """Read sdrangel's iq file format
 
     https://github.com/f4exb/sdrangel/blob/aa0cba102a6ce6b89065ed458533910e5f934d2a/sdrbase/dsp/filerecord.h
         struct Header
@@ -73,22 +72,3 @@ def Q_signal(data: np.array):
 
 def save_complex(data: np.array, output_filename: str):
     data.astype(np.float32).tofile(output_filename)
-
-
-def convert(input_filename: str, output_filename: str):
-
-    data, meta = load_data(input_filename)
-    save_complex(data, output_filename)
-
-    return meta
-
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(prog="sdriq2complex")
-    parser.add_argument("input", help="sdrangel's *.sdriq file")
-    parser.add_argument("output", help="float32 *.complex file")
-    args = parser.parse_args()
-
-    meta = convert(args.input, args.output)
-    for k, v in meta.items():
-        print(f"{k}: {v}")
